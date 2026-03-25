@@ -6,4 +6,13 @@
     <Nullable>enable</Nullable>
   </PropertyGroup>
 
+  <ItemGroup>
+    <Folder Include="Kitchen\Queries\" />
+    <Folder Include="Shared\" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\FulfillmentTracker.Domain\FulfillmentTracker.Domain.csproj" />
+  </ItemGroup>
+
 </Project>
