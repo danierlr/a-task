@@ -1,10 +1,19 @@
-﻿namespace FulfillmentTracker.Domain.Aggregate;
+﻿using FulfillmentTracker.Domain.Ports;
+
+namespace FulfillmentTracker.Domain.Aggregate;
 
 public class Kitchen {
-    public void AddOrder(Order order) {
+    private readonly IStorageStrategy _storageStrategy;
 
+    public Kitchen(IStorageStrategy storageStrategy) {
+        _storageStrategy = storageStrategy;
     }
 
-    public void RemoveOrder(OrderId orderId) {
+    public void AddOrder(Order order) {
+        _storageStrategy.Place(order);
+    }
+
+    public void PickOrder(OrderId orderId) {
+        _storageStrategy.Pick(orderId);
     }
 }

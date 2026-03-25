@@ -1,7 +1,7 @@
 ﻿using FulfillmentTracker.Domain.Aggregate;
 using FulfillmentTracker.Domain.Ports;
 
-namespace FulfillmentTracker.Application.Kitchen;
+namespace FulfillmentTracker.Application.KitchenProcessing;
 
 internal class InterpolatedPriorityStrategy : IStorageStrategy {
     public Order PickOrder(OrderId orderId) {
