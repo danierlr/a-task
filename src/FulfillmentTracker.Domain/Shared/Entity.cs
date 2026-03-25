@@ -1,4 +1,4 @@
 ﻿namespace FulfillmentTracker.Domain.Shared;
 
-internal class Entity {
+public abstract class Entity {
 }

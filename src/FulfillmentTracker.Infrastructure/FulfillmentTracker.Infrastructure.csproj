@@ -6,4 +6,9 @@
     <Nullable>enable</Nullable>
   </PropertyGroup>
 
+  <ItemGroup>
+    <ProjectReference Include="..\FulfillmentTracker.Application\FulfillmentTracker.Application.csproj" />
+    <ProjectReference Include="..\FulfillmentTracker.Domain\FulfillmentTracker.Domain.csproj" />
+  </ItemGroup>
+
 </Project>

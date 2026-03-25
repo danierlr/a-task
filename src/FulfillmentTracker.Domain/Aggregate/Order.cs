@@ -1,13 +1,13 @@
 ﻿namespace FulfillmentTracker.Domain.Aggregate;
 
 public class Order {
-    public OrderId Id { get; set; }
+    public OrderId Id { get; init; }
 
-    public string Name { get; set; }
+    public string Name { get; init; }
 
-    public Temperature Temperature { get; set; }
+    public Temperature Temperature { get; init; }
 
-    public decimal Price { get; set; }
+    public decimal Price { get; init; }
 
-    public TimeSpan Freshness { get; set; }
+    public TimeSpan Freshness { get; init; }
 }

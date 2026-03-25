@@ -39,11 +39,11 @@ internal class Program {
                 }
             }
 
-            string authToken = ReadArg("auth", "");
-            string endpoint = ReadArg("endpoint", "eee");
+            string authToken = ReadArg("auth", ""); // TODO - read from config that is in .gitignore
+            string endpoint = ReadArg("endpoint", ""); // TODO - read from config that is in .gitignore
             string name = ReadArg("name", "");
             long seed = long.Parse(ReadArg("seed", "0"));
-            int rate = int.Parse(ReadArg("seed", "500")); ;
+            int rate = int.Parse(ReadArg("rate", "500")); ;
             int minPickDelaySeconds = int.Parse(ReadArg("min", "4"));
             int maxPickDelaySeconds = int.Parse(ReadArg("max", "8"));
 

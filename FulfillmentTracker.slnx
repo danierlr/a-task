@@ -1,6 +1,6 @@
 <Solution>
   <Folder Name="/src/">
-    <Project Path="src/FulfillmentService.Application/FulfillmentTracker.Application.csproj" Id="4699129f-3a18-4471-baf6-7632c6fb3494" />
+    <Project Path="src/FulfillmentTracker.Application/FulfillmentTracker.Application.csproj" Id="4699129f-3a18-4471-baf6-7632c6fb3494" />
     <Project Path="src/FulfillmentTracker.Domain/FulfillmentTracker.Domain.csproj" />
     <Project Path="src/FulfillmentTracker.EventSourcing/FulfillmentTracker.EventSourcing.csproj" Id="631b2e8a-bc48-4cef-86d3-ea288f379f74" />
     <Project Path="src/FulfillmentTracker.Harness/FulfillmentTracker.Harness.csproj" Id="8e9ed774-3218-4055-a8fa-5b409ec3f660" />
