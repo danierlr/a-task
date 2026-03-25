@@ -2,5 +2,5 @@
 
 namespace FulfillmentTracker.Application.KitchenProcessing.Commands;
 
-public class PlaceOrderCommand: Command {
+public class PlaceOrderCommand: IOrderCommand {
 }

@@ -9,7 +9,7 @@ public class Kitchen {
         _storageStrategy = storageStrategy;
     }
 
-    public void AddOrder(Order order) {
+    public void PlaceOrder(Order order) {
         _storageStrategy.Place(order);
     }
 
