@@ -8,6 +8,7 @@
 
   <ItemGroup>
     <Folder Include="KitchenProcessing\Queries\" />
+    <Folder Include="Utils\" />
   </ItemGroup>
 
   <ItemGroup>

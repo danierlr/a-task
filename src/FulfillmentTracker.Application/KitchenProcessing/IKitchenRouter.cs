@@ -3,5 +3,5 @@
 namespace FulfillmentTracker.Application.KitchenProcessing;
 
 public interface IKitchenRouter {
-    void Handle(ICommand command);
+    void Handle(IKitchenCommand command);
 }

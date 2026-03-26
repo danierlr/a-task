@@ -8,7 +8,7 @@ public class SingleKitchenRouter : IKitchenRouter {
         _kitchenReactor = kitchenReactor;
     }
 
-    public void Handle(ICommand command) {
+    public void Handle(IKitchenCommand command) {
         _kitchenReactor.Add(command);
     }
 }

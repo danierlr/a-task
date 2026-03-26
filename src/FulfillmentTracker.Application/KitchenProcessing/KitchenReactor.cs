@@ -13,22 +13,22 @@ public class KitchenReactor {
     private Kitchen _kitchen;
     private KitchenStorage _kitchenStorage;
 
-    private Channel<ICommand> _channel;
+    private Channel<IKitchenCommand> _channel;
 
     public KitchenReactor() {
-        _channel = Channel.CreateUnbounded<ICommand>(new UnboundedChannelOptions() {
+        _channel = Channel.CreateUnbounded<IKitchenCommand>(new UnboundedChannelOptions() {
             SingleReader = true,
             SingleWriter = false,
         });
 
         _kitchenStorage = new KitchenStorage(6, 12, 6); // TODO take params from config
 
-        var strategy = new InterpolatedPriorityStrategy();
+        var strategy = new StorageStrategy();
 
         _kitchen = new Kitchen(strategy);
     }
 
-    public void Add(ICommand command) {
+    public void Add(IKitchenCommand command) {
         bool added = _channel.Writer.TryWrite(command);
 
         if (!added) {
@@ -36,12 +36,13 @@ public class KitchenReactor {
         }
     }
 
-    private void Handle(ICommand command) {
-        if (command is PlaceOrderCommand and not null) {
-            PlaceOrder(command as PlaceOrderCommand);
-        }
+    private void Handle(IKitchenCommand command) {
 
-        // TODO
+        switch (command) {
+            case PlaceOrderCommand placeCommand: PlaceOrder(placeCommand); break;
+            case PickOrderCommand pickCommand: PickOrder(pickCommand); break;
+            default: throw new InvalidOperationException($"Unexpected command: {command.GetType().Name}");
+        }
     }
 
     private void PlaceOrder(PlaceOrderCommand placeCommand) {
