@@ -1,4 +1,6 @@
-﻿namespace FulfillmentTracker.Domain.Aggregate;
+﻿using FulfillmentTracker.Domain.OrderAggregate;
+
+namespace FulfillmentTracker.Domain.KitchenAggregate;
 
 public class StorageZoneUnit {
     public long MaxCount { get; init; }

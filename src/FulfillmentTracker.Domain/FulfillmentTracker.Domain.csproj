@@ -7,7 +7,7 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <Folder Include="Shared\Events\" />
+    <Folder Include="Shared\" />
   </ItemGroup>
 
 </Project>

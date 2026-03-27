@@ -1,4 +1,4 @@
-﻿namespace FulfillmentTracker.Domain.Aggregate;
+﻿namespace FulfillmentTracker.Domain.OrderAggregate;
 
 public enum Temperature {
     Cold,

@@ -1,6 +1,6 @@
 ﻿using FulfillmentTracker.Application.Shared;
-using FulfillmentTracker.Domain.Aggregate;
-using FulfillmentTracker.Domain.Ports;
+using FulfillmentTracker.Domain.KitchenAggregate;
+using FulfillmentTracker.Domain.OrderAggregate;
 
 namespace FulfillmentTracker.Application.KitchenProcessing.Storage;
 

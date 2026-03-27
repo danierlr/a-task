@@ -14,7 +14,7 @@ public class IndexedHeapBinary<TValue, TPriority> : IIndexedHeap<TValue, TPriori
 
     private readonly Dictionary<TValue, int> _indexByValue = new();
 
-    public IndexedHeapBinary(IComparer<TPriority>? comparer) {
+    public IndexedHeapBinary(IComparer<TPriority>? comparer = null) {
         _comparer = comparer ?? Comparer<TPriority>.Default;
     }
 

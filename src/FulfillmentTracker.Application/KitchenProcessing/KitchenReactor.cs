@@ -1,6 +1,6 @@
 ﻿using FulfillmentTracker.Application.KitchenProcessing.Commands;
 using FulfillmentTracker.Application.Shared;
-using FulfillmentTracker.Domain.Aggregate;
+using FulfillmentTracker.Domain.KitchenAggregate;
 using System.Threading.Channels;
 
 namespace FulfillmentTracker.Application.KitchenProcessing;

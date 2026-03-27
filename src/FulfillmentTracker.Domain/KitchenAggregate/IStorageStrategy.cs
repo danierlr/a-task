@@ -1,6 +1,6 @@
-﻿using FulfillmentTracker.Domain.Aggregate;
+﻿using FulfillmentTracker.Domain.OrderAggregate;
 
-namespace FulfillmentTracker.Domain.Ports;
+namespace FulfillmentTracker.Domain.KitchenAggregate;
 
 public interface IStorageStrategy {
     void Place(Order order, DateTime now);

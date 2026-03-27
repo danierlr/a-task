@@ -1,4 +1,4 @@
-﻿namespace FulfillmentTracker.Domain.Aggregate;
+﻿namespace FulfillmentTracker.Domain.KitchenAggregate;
 
 public enum StorageZone {
     Cooler,

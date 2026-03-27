@@ -1,6 +1,15 @@
-﻿namespace FulfillmentTracker.Domain.Aggregate;
+﻿using FulfillmentTracker.Domain.Action;
+using FulfillmentTracker.Domain.KitchenAggregate;
+
+namespace FulfillmentTracker.Domain.OrderAggregate;
 
 public class Order {
+    IActionLedger _actionLedger;
+
+    public Order(IActionLedger actionLedger) {
+        _actionLedger = actionLedger;
+    }
+
     public OrderId Id { get; init; }
 
     public string Name { get; init; }

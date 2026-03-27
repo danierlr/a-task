@@ -1,6 +1,6 @@
-﻿using FulfillmentTracker.Domain.Ports;
+﻿using FulfillmentTracker.Domain.OrderAggregate;
 
-namespace FulfillmentTracker.Domain.Aggregate;
+namespace FulfillmentTracker.Domain.KitchenAggregate;
 
 public class Kitchen {
     private readonly IStorageStrategy _storageStrategy;
