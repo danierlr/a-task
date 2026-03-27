@@ -31,7 +31,7 @@ internal class StorageStrategy : IStorageStrategy {
 
         if (!optimalStorage.IsFull) {
             optimalStorage.Place(order);
-            order.Place(optimalStorage.Zone);
+            order.MarkAsPlaced(optimalStorage.Zone, now);
             return;
         }
 
@@ -64,14 +64,14 @@ internal class StorageStrategy : IStorageStrategy {
                 Order moved = _ordersSuboptimalColdByPrice.Dequeue();
                 shelf.Pick(moved.Id);
                 cooler.Place(moved);
-                moved.Move(StorageZone.Cooler);
+                moved.MarkAsMoved(StorageZone.Cooler, now);
             }
 
             if (shouldMoveHot) {
                 Order moved = _ordersSuboptimalHotByPrice.Dequeue();
                 shelf.Pick(moved.Id);
                 heater.Place(moved);
-                moved.Move(StorageZone.Heater);
+                moved.MarkAsMoved(StorageZone.Heater, now);
             }
         }
 
@@ -80,17 +80,17 @@ internal class StorageStrategy : IStorageStrategy {
 
             if (evicted is not null) {
                 shelf.Pick(evicted.Id);
-                evicted.Discard();
+                evicted.MarkAsDiscarded(now);
             }
         }
 
         if(shelf.IsFull) {
-            order.Discard();
+            order.MarkAsDiscarded(now);
             return;
         }
 
         shelf.Place(order);
-        order.Place(StorageZone.Shelf);
+        order.MarkAsPlaced(StorageZone.Shelf, now);
 
         if(order.Temperature == Temperature.Cold) {
             _ordersSuboptimalColdByPrice.Enqueue(order, order.Price);

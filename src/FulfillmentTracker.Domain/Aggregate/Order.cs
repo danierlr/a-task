@@ -11,19 +11,19 @@ public class Order {
 
     public TimeSpan Freshness { get; init; }
 
-    public void Place(StorageZone target) {
+    public void MarkAsPlaced(StorageZone target, DateTime moment) {
         throw new NotImplementedException();
     }
 
-    public void Move(StorageZone target) {
+    public void MarkAsMoved(StorageZone target, DateTime moment) {
         throw new NotImplementedException();
     }
 
-    public void Pickup() {
+    public void MarkAsPicked(DateTime moment) {
         throw new NotImplementedException();
     }
 
-    public void Discard() {
+    public void MarkAsDiscarded(DateTime moment) {
         throw new NotImplementedException();
     }
 }
