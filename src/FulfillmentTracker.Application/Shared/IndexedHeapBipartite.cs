@@ -1,14 +1,17 @@
 ﻿namespace FulfillmentTracker.Application.Shared;
 
-// Supporting null values, because standart library priority queue supports them as well. // TODO? Consider creating dictionary wrapper that accepts null key if needed
-
-public class IndexedHeapBipartite<TValue, TPriority> : IndexedHeap<TValue, TPriority> {
+public class IndexedHeapBipartite<TValue, TPriority> : IIndexedHeap<TValue, TPriority> {
     private readonly record struct HeapEntry(TValue Value, TPriority Priority);
 
     private readonly IComparer<TPriority> _comparer;
 
     private List<HeapEntry> _entries = new();
-    private int? _nullValueIndex = null; // null is not allowed as key in Dictionary
+
+    // null index is separately, because null is not allowed as key in Dictionary
+    // Supporting null values, because standart library priority queue supports them as well.
+    // TODO? Consider creating dictionary wrapper that accepts null key if needed
+    private int? _nullValueIndex = null;
+
     private readonly Dictionary<TValue, int> _indexByValue = new();
 
     public IndexedHeapBipartite(IComparer<TPriority>? comparer) {
@@ -95,7 +98,7 @@ public class IndexedHeapBipartite<TValue, TPriority> : IndexedHeap<TValue, TPrio
         }
     }
 
-    public override int Count => _entries.Count;
+    public int Count => _entries.Count;
 
     public TValue Peek() {
         if (Count == 0) {
@@ -105,7 +108,7 @@ public class IndexedHeapBipartite<TValue, TPriority> : IndexedHeap<TValue, TPrio
         return _entries[0].Value;
     }
 
-    public override bool Contains(TValue value) {
+    public bool Contains(TValue value) {
         if (value is null) {
             return _nullValueIndex is not null;
         }
@@ -113,7 +116,7 @@ public class IndexedHeapBipartite<TValue, TPriority> : IndexedHeap<TValue, TPrio
         return _indexByValue.ContainsKey(value);
     }
 
-    public override TValue Dequeue() {
+    public TValue Dequeue() {
         TValue value = Peek();
 
         Remove(value);
@@ -121,7 +124,11 @@ public class IndexedHeapBipartite<TValue, TPriority> : IndexedHeap<TValue, TPrio
         return value;
     }
 
-    public override void Enqueue(TValue value, TPriority priority) {
+    public void Enqueue(TValue value, TPriority priority) {
+        if (Contains(value)) {
+            throw new InvalidOperationException($"Value {value} is present in the heap already");
+        }
+
         HeapEntry entry = new HeapEntry(value, priority);
 
         _entries.Add(entry);
@@ -133,7 +140,7 @@ public class IndexedHeapBipartite<TValue, TPriority> : IndexedHeap<TValue, TPrio
         FixUp(inserIndex);
     }
 
-    public override bool Remove(TValue value) {
+    public bool Remove(TValue value) {
         if (!Contains(value)) {
             return false;
         }
@@ -150,10 +157,10 @@ public class IndexedHeapBipartite<TValue, TPriority> : IndexedHeap<TValue, TPrio
 
         Swap(indexRemoved, indexLast);
 
-        _indexByValue.Remove(value);
+        RemoveIndex(value);
         _entries.RemoveAt(indexLast);
 
-        if(Count > 0) {
+        if (Count > 0 && indexRemoved < Count) {
             FixUp(indexRemoved);
             FixDown(indexRemoved);
         }

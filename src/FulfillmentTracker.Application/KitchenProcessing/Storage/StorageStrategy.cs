@@ -6,6 +6,8 @@ namespace FulfillmentTracker.Application.KitchenProcessing.Storage;
 internal class StorageStrategy : IStorageStrategy {
     private readonly KitchenStorage _kitchenStorage;
 
+    private readonly 
+
     public StorageStrategy(KitchenStorage kitchenStorage) {
         _kitchenStorage = kitchenStorage;
     }
@@ -18,11 +20,19 @@ internal class StorageStrategy : IStorageStrategy {
         StorageZoneUnit optimalStorage = _kitchenStorage.GetStorageOptimal(order.Temperature);
 
         if(optimalStorage.IsFull) {
-            if(optimalStorage.Zone == StorageZone.Shelf) {
+            StorageZoneUnit shelfStorage = _kitchenStorage.GetStorage(StorageZone.Shelf);
+
+            if(shelfStorage.IsFull) {
+
+            }
+            if (optimalStorage.Zone == StorageZone.Shelf) {
 
             } else {
                 //StorageZone shelfStorage = 
             }
+        } else {
+            // discard expired?
+            optimalStorage.Place(order);
         }
 
         throw new NotImplementedException();
