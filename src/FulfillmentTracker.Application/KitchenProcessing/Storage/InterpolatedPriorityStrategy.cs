@@ -1,8 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Text;
+﻿namespace FulfillmentTracker.Application.KitchenProcessing.Storage;
 
-namespace FulfillmentTracker.Application.KitchenProcessing.Storage;
-
-internal class InterpolatedPriorityStrategy {
+public class InterpolatedPriorityStrategy: IOverflowAdmissionStrategy {
 }

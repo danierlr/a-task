@@ -7,7 +7,7 @@ public class IndexedHeapBipartite<TValue, TPriority> : IndexedHeap<TValue, TPrio
 
     private readonly IComparer<TPriority> _comparer;
 
-    private List<HeapEntry> _items = new();
+    private List<HeapEntry> _entries = new();
     private int? _nullValueIndex = null; // null is not allowed as key in Dictionary
     private readonly Dictionary<TValue, int> _indexByValue = new();
 
@@ -19,7 +19,7 @@ public class IndexedHeapBipartite<TValue, TPriority> : IndexedHeap<TValue, TPrio
         while (index > 0) {
             int parentIndex = (index - 1) / 2;
 
-            bool parentDominates = _comparer.Compare(_items[parentIndex].Priority, _items[index].Priority) <= 0;
+            bool parentDominates = _comparer.Compare(_entries[parentIndex].Priority, _entries[index].Priority) <= 0;
 
             if (parentDominates) {
                 break;
@@ -32,29 +32,29 @@ public class IndexedHeapBipartite<TValue, TPriority> : IndexedHeap<TValue, TPrio
     }
 
     private void FixDown(int index) {
-        while(index < Count) {
+        while (index < Count) {
             int leftChildIndex = index * 2 + 1;
             int rightChildIndex = index * 2 + 2;
 
             int dominantIndex = index;
 
-            if(leftChildIndex < Count) {
-                bool childDominates = _comparer.Compare(_items[leftChildIndex].Priority, _items[index].Priority) <= 0;
+            if (leftChildIndex < Count) {
+                bool childDominates = _comparer.Compare(_entries[leftChildIndex].Priority, _entries[dominantIndex].Priority) <= 0;
 
-                if(childDominates) {
+                if (childDominates) {
                     dominantIndex = leftChildIndex;
                 }
             }
 
             if (rightChildIndex < Count) {
-                bool childDominates = _comparer.Compare(_items[rightChildIndex].Priority, _items[index].Priority) <= 0;
+                bool childDominates = _comparer.Compare(_entries[rightChildIndex].Priority, _entries[dominantIndex].Priority) <= 0;
 
                 if (childDominates) {
                     dominantIndex = rightChildIndex;
                 }
             }
 
-            if(dominantIndex == index) {
+            if (dominantIndex == index) {
                 break;
             }
 
@@ -65,12 +65,12 @@ public class IndexedHeapBipartite<TValue, TPriority> : IndexedHeap<TValue, TPrio
     }
 
     private void Swap(int indexA, int indexB) {
-        HeapEntry tmpEntry = _items[indexA];
-        _items[indexA] = _items[indexB];
-        _items[indexB] = tmpEntry;
+        HeapEntry tmpEntry = _entries[indexA];
+        _entries[indexA] = _entries[indexB];
+        _entries[indexB] = tmpEntry;
 
-        var valueA = _items[indexA].Value;
-        var valueB = _items[indexB].Value;
+        var valueA = _entries[indexA].Value;
+        var valueB = _entries[indexB].Value;
 
         //RemoveIndex(valueA);
         //RemoveIndex(valueB);
@@ -95,25 +95,69 @@ public class IndexedHeapBipartite<TValue, TPriority> : IndexedHeap<TValue, TPrio
         }
     }
 
-    public override int Count => _items.Count;
+    public override int Count => _entries.Count;
 
     public TValue Peek() {
-        throw new NotImplementedException();
+        if (Count == 0) {
+            throw new InvalidOperationException("No values are present in the queue");
+        }
+
+        return _entries[0].Value;
     }
 
     public override bool Contains(TValue value) {
-        throw new NotImplementedException();
+        if (value is null) {
+            return _nullValueIndex is not null;
+        }
+
+        return _indexByValue.ContainsKey(value);
     }
 
     public override TValue Dequeue() {
-        throw new NotImplementedException();
+        TValue value = Peek();
+
+        Remove(value);
+
+        return value;
     }
 
     public override void Enqueue(TValue value, TPriority priority) {
-        throw new NotImplementedException();
+        HeapEntry entry = new HeapEntry(value, priority);
+
+        _entries.Add(entry);
+
+        int inserIndex = Count - 1;
+
+        SetIndex(value, inserIndex);
+
+        FixUp(inserIndex);
     }
 
-    public override void Remove(TValue value) {
-        throw new NotImplementedException();
+    public override bool Remove(TValue value) {
+        if (!Contains(value)) {
+            return false;
+        }
+
+        int indexRemoved = 0;
+
+        if (value is null) {
+            indexRemoved = (int)_nullValueIndex;
+        } else {
+            indexRemoved = _indexByValue[value];
+        }
+
+        int indexLast = Count - 1;
+
+        Swap(indexRemoved, indexLast);
+
+        _indexByValue.Remove(value);
+        _entries.RemoveAt(indexLast);
+
+        if(Count > 0) {
+            FixUp(indexRemoved);
+            FixDown(indexRemoved);
+        }
+
+        return true;
     }
 }

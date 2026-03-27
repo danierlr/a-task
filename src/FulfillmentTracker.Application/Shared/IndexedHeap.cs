@@ -8,7 +8,7 @@ public abstract class IndexedHeap<TValue, TPriority> {
 
     public abstract TValue Dequeue();
 
-    public abstract void Remove(TValue value);
+    public abstract bool Remove(TValue value);
 
     public abstract bool Contains(TValue value);
 
