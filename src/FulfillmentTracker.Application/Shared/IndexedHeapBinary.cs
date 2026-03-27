@@ -1,11 +1,11 @@
 ﻿namespace FulfillmentTracker.Application.Shared;
 
-public class IndexedHeapBipartite<TValue, TPriority> : IIndexedHeap<TValue, TPriority> {
+public class IndexedHeapBinary<TValue, TPriority> : IIndexedHeap<TValue, TPriority> {
     private readonly record struct HeapEntry(TValue Value, TPriority Priority);
 
     private readonly IComparer<TPriority> _comparer;
 
-    private List<HeapEntry> _entries = new();
+    private readonly List<HeapEntry> _entries = new();
 
     // null index is separately, because null is not allowed as key in Dictionary
     // Supporting null values, because standart library priority queue supports them as well.
@@ -14,7 +14,7 @@ public class IndexedHeapBipartite<TValue, TPriority> : IIndexedHeap<TValue, TPri
 
     private readonly Dictionary<TValue, int> _indexByValue = new();
 
-    public IndexedHeapBipartite(IComparer<TPriority>? comparer) {
+    public IndexedHeapBinary(IComparer<TPriority>? comparer) {
         _comparer = comparer ?? Comparer<TPriority>.Default;
     }
 

@@ -3,6 +3,6 @@
 namespace FulfillmentTracker.Domain.Ports;
 
 public interface IStorageStrategy {
-    void Place(Order order);
-    Order? Pick(OrderId orderId);
+    void Place(Order order, DateTime now);
+    Order? Pick(OrderId orderId, DateTime now);
 }
