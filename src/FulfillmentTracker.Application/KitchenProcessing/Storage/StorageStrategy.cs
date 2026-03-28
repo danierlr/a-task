@@ -1,4 +1,5 @@
-﻿using FulfillmentTracker.Application.Shared;
+﻿using FulfillmentTracker.Application.Dsa.IndexedHeap;
+using FulfillmentTracker.Application.Shared;
 using FulfillmentTracker.Domain.KitchenAggregate;
 using FulfillmentTracker.Domain.OrderAggregate;
 

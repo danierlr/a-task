@@ -1,4 +1,4 @@
-﻿namespace FulfillmentTracker.Application.Shared;
+﻿namespace FulfillmentTracker.Application.Dsa.IndexedHeap;
 
 public class IndexedHeapBinary<TValue, TPriority> : IIndexedHeap<TValue, TPriority> {
     private readonly record struct HeapEntry(TValue Value, TPriority Priority);
